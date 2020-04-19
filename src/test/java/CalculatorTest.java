@@ -5,6 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class CalculatorTest {
 
     @Test
+    public void testAdd() {
+        Calculator calc = new Calculator();
+        assertEquals(5, calc.add(3, 2));
+    }
+
+    /*
+
+    @Test
     public void testSub() {
         Calculator calc = new Calculator();
         assertEquals(1, calc.sub(3, 2));
@@ -33,5 +41,7 @@ class CalculatorTest {
         Calculator calc = new Calculator();
         calc.multiIfElse();
     }
+
+     */
 
 }
