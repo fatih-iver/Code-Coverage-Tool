@@ -1,9 +1,11 @@
 import core.CCTClassVisitor;
 import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.util.TraceClassVisitor;
+import tree.CCTClassNode;
 import tree.CCTClassTransformer;
 
 import java.io.File;
@@ -55,6 +57,8 @@ public class Main {
 
         //-------------------------------------------------------------------------------------------
 
+        /*
+
         System.out.println("Tree API - Code Coverage Tool - Start");
 
         ClassNode classNode = new ClassNode(Opcodes.ASM8);
@@ -75,7 +79,21 @@ public class Main {
 
         System.out.println("Tree API - Code Coverage Tool - End");
 
+         */
 
+        //----------------------------------------------------------------------------------------------
+
+        ClassWriter classWriter = new ClassWriter(0);
+
+        CCTClassNode cctClassNode = new CCTClassNode(Opcodes.ASM8, classWriter);
+
+        ClassReader classReader = new ClassReader("Calculator");
+
+        classReader.accept(cctClassNode, 0);
+
+        byte[] byteArray = classWriter.toByteArray();
+
+        System.out.println(byteArray.length);
     }
 
 }
