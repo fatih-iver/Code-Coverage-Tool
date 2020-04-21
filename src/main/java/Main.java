@@ -1,3 +1,4 @@
+import cct.CCTClassLoader;
 import core.CCTClassVisitor;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
@@ -12,12 +13,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, IllegalAccessException, InstantiationException, InvocationTargetException {
 
-        /*
 
         System.out.println("Core API - Code Coverage Tool - Start");
 
@@ -37,9 +40,9 @@ public class Main {
             if (!generatedClassesDirectory.mkdir())
                 System.out.println("generated-classes directory cannot be created");
 
-        File calculatorClass = new File(generatedClassesDirectory, "Calculator");
+        File calculatorClass = new File(generatedClassesDirectory, "Calculator.class");
 
-        PrintWriter printWriter = new PrintWriter(new FileOutputStream(calculatorClass)));
+        PrintWriter printWriter = new PrintWriter(new FileOutputStream(calculatorClass));
 
         TraceClassVisitor traceClassVisitor = new TraceClassVisitor(classWriter, printWriter);
 
@@ -51,9 +54,20 @@ public class Main {
 
         byte[] bytes = classWriter.toByteArray();
 
+        CCTClassLoader cctClassLoader = new CCTClassLoader(Calculator.class.getClassLoader());
+
+        Class classCalculatorCCT = cctClassLoader.defineClass("Calculator", bytes);
+
+        Object calculatorCCTObject = classCalculatorCCT.newInstance();
+
+        for(Method method: classCalculatorCCT.getDeclaredMethods()){
+            if(method.getName().equals("other")){
+                method.invoke(calculatorCCTObject);
+            }
+        }
+
         System.out.println("Core API - Code Coverage Tool - End");
 
-        */
 
         //-------------------------------------------------------------------------------------------
 
@@ -83,6 +97,8 @@ public class Main {
 
         //----------------------------------------------------------------------------------------------
 
+        /*
+
         ClassWriter classWriter = new ClassWriter(0);
 
         CCTClassNode cctClassNode = new CCTClassNode(Opcodes.ASM8, classWriter);
@@ -94,6 +110,8 @@ public class Main {
         byte[] byteArray = classWriter.toByteArray();
 
         System.out.println(byteArray.length);
+
+         */
     }
 
 }

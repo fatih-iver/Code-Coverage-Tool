@@ -15,7 +15,7 @@ public class Calculator {
         return result;
     }
 
-    /*
+
 
     public int sub(int x, int y) {
         int result = x - y;
@@ -99,7 +99,7 @@ public class Calculator {
 
     }
 
-     */
+
 
 }
 

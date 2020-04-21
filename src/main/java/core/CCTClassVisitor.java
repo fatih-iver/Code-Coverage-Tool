@@ -21,7 +21,7 @@ public class CCTClassVisitor extends ClassVisitor {
     @Override
     public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
         MethodVisitor methodVisitor = cv.visitMethod(access, name, descriptor, signature, exceptions);
-        return new CCTMethodVisitor(Opcodes.ASM8, methodVisitor);
+        return new CCTMethodVisitor(name, Opcodes.ASM8, methodVisitor);
     }
 
 }

@@ -1,8 +1,26 @@
+import cct.CCT;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CalculatorTest {
+
+    /*
+    private static Class ClassCCTCalculator;
+
+    @BeforeAll
+    public static void beforeAll() throws IllegalAccessException, IOException, InstantiationException {
+        System.out.print("BeforeAll - Start");
+        ClassCCTCalculator = CCT.generateThenLoadClassForName("Calculator");
+        System.out.print("BeforeAll - End");
+    }
+
+
+     */
+
 
     @Test
     public void testAdd() {
@@ -10,7 +28,7 @@ class CalculatorTest {
         assertEquals(5, calc.add(3, 2));
     }
 
-    /*
+
 
     @Test
     public void testSub() {
@@ -42,6 +60,6 @@ class CalculatorTest {
         calc.multiIfElse();
     }
 
-     */
+
 
 }
