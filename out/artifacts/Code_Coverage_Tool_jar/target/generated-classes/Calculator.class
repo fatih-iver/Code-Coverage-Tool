@@ -12,6 +12,8 @@ public class Calculator {
     LINENUMBER 8 L0
     ALOAD 0
     INVOKESPECIAL java/lang/Object.<init> ()V
+    LDC "<init>"
+    INVOKESTATIC cct/CCTMapper.print (Ljava/lang/String;)V
     RETURN
    L1
     LOCALVARIABLE this LCalculator; L0 L1 0
@@ -54,6 +56,8 @@ public class Calculator {
     INVOKESTATIC cct/CCTMapper.map (Ljava/lang/String;)V
     LINENUMBER 15 L4
     ILOAD 5
+    LDC "add"
+    INVOKESTATIC cct/CCTMapper.print (Ljava/lang/String;)V
     IRETURN
    L5
     LOCALVARIABLE this LCalculator; L0 L5 0
@@ -80,6 +84,8 @@ public class Calculator {
     INVOKESTATIC cct/CCTMapper.map (Ljava/lang/String;)V
     LINENUMBER 22 L1
     ILOAD 3
+    LDC "sub"
+    INVOKESTATIC cct/CCTMapper.print (Ljava/lang/String;)V
     IRETURN
    L2
     LOCALVARIABLE this LCalculator; L0 L2 0
@@ -104,6 +110,8 @@ public class Calculator {
     INVOKESTATIC cct/CCTMapper.map (Ljava/lang/String;)V
     LINENUMBER 28 L1
     ILOAD 3
+    LDC "mult"
+    INVOKESTATIC cct/CCTMapper.print (Ljava/lang/String;)V
     IRETURN
    L2
     LOCALVARIABLE this LCalculator; L0 L2 0
@@ -128,6 +136,8 @@ public class Calculator {
     INVOKESTATIC cct/CCTMapper.map (Ljava/lang/String;)V
     LINENUMBER 34 L1
     ILOAD 3
+    LDC "div"
+    INVOKESTATIC cct/CCTMapper.print (Ljava/lang/String;)V
     IRETURN
    L2
     LOCALVARIABLE this LCalculator; L0 L2 0
@@ -225,6 +235,8 @@ public class Calculator {
     INVOKESTATIC cct/CCTMapper.map (Ljava/lang/String;)V
     LINENUMBER 60 L11
    FRAME SAME
+    LDC "other"
+    INVOKESTATIC cct/CCTMapper.print (Ljava/lang/String;)V
     RETURN
    L12
     LOCALVARIABLE this LCalculator; L0 L12 0
@@ -281,6 +293,8 @@ public class Calculator {
     INVOKESTATIC cct/CCTMapper.map (Ljava/lang/String;)V
     LINENUMBER 75 L6
    FRAME SAME
+    LDC "uncovered"
+    INVOKESTATIC cct/CCTMapper.print (Ljava/lang/String;)V
     RETURN
    L8
     LOCALVARIABLE i I L2 L3 2
@@ -341,6 +355,8 @@ public class Calculator {
     INVOKESTATIC cct/CCTMapper.map (Ljava/lang/String;)V
     LINENUMBER 89 L4
    FRAME SAME
+    LDC "multiIfElse"
+    INVOKESTATIC cct/CCTMapper.print (Ljava/lang/String;)V
     RETURN
    L7
     LOCALVARIABLE this LCalculator; L0 L7 0
@@ -366,6 +382,8 @@ public class Calculator {
     INVOKESTATIC cct/CCTMapper.map (Ljava/lang/String;)V
     LINENUMBER 98 L1
    FRAME SAME
+    LDC "deneme"
+    INVOKESTATIC cct/CCTMapper.print (Ljava/lang/String;)V
     RETURN
    L3
     LOCALVARIABLE this LCalculator; L0 L3 0

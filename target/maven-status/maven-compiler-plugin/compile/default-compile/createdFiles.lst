@@ -1,1 +1,12 @@
+Calculator.class
 Main.class
+core\CCTClassVisitor.class
+tree\CCTClassNode.class
+cct\CCTMapper.class
+core\CCTMethodVisitor.class
+tree\CCTClassTransformer.class
+cct\CCTClassLoader.class
+tree\MethodTransformer.class
+tree\CCTMethodTransformer.class
+tree\ClassTransformer.class
+cct\CCT.class
