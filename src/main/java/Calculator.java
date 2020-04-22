@@ -8,10 +8,7 @@
 public class Calculator {
 
     public int add(int x, int y) {
-        long startTime = System.currentTimeMillis();
         int result = x + y;
-        long endTime = System.currentTimeMillis();
-        System.out.println(endTime - startTime);
         return result;
     }
 

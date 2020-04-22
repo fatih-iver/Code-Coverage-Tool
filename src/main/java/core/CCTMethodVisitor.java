@@ -27,10 +27,12 @@ public class CCTMethodVisitor extends MethodVisitor {
 
     @Override
     public void visitInsn(int opcode) {
+        /*
         if ((opcode >= IRETURN && opcode <= RETURN) || opcode == ATHROW) {
             mv.visitLdcInsn(methodName);
             mv.visitMethodInsn(INVOKESTATIC, "cct/CCTMapper", "print", "(Ljava/lang/String;)V", false);
         }
+         */
         super.visitInsn(opcode);
     }
 

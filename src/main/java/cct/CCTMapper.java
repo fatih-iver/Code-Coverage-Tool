@@ -28,4 +28,13 @@ public class CCTMapper extends HashMap<String, String> {
             cctMapper.remove(methodName);
         }
     }
+
+    public static void printResults() {
+
+        for(String methodName: cctMapper.keySet()){
+            System.out.println(methodName + " : " +cctMapper.get(methodName));
+
+        }
+
+    }
 }
