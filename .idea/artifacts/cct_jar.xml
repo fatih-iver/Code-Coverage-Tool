@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="cct:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/cct_jar</output-path>
+    <root id="archive" name="cct.jar">
+      <element id="module-output" name="Code-Coverage-Tool" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/ow2/asm/asm/8.0.1/asm-8.0.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
