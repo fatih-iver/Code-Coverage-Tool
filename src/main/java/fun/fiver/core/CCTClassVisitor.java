@@ -1,27 +1,24 @@
 package fun.fiver.core;
 
-import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
+import fun.fiver.cct.CCTCollector;
+import org.objectweb.asm.*;
+
+import java.util.logging.Logger;
 
 public class CCTClassVisitor extends ClassVisitor {
 
-    private String owner;
 
-    public CCTClassVisitor(int api, ClassVisitor classVisitor) {
-        super(api, classVisitor);
-    }
-
-    @Override
-    public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
-        super.visit(version, access, name, signature, superName, interfaces);
-        this.owner = name;
+    public CCTClassVisitor(int api) {
+        super(api);
     }
 
     @Override
     public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
-        MethodVisitor methodVisitor = cv.visitMethod(access, name, descriptor, signature, exceptions);
-        return new CCTMethodVisitor(name, Opcodes.ASM8, methodVisitor);
+        return new CCTMethodVisitor(api, name);
     }
 
+    @Override
+    public void visitEnd() {
+        CCTCollector.finishCollecting();
+    }
 }
