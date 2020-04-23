@@ -37,4 +37,26 @@ public class CCTMapper extends HashMap<String, String> {
         }
 
     }
+
+    public static Set<Integer> getVisitedLineNumbers() {
+
+        Set<Integer> visitedLineNumbers = new HashSet<>();
+
+        for(String methodName: cctMapper.keySet()){
+            visitedLineNumbers.addAll(cctMapper.get(methodName));
+        }
+
+        return visitedLineNumbers;
+    }
+
+    public static Set<String> getVisitedMethodNames() {
+
+        Set<String> visitedMethodNames= new HashSet<>();
+
+        for(String methodName: cctMapper.keySet()){
+            visitedMethodNames.add(methodName);
+        }
+
+        return visitedMethodNames;
+    }
 }
