@@ -1,10 +1,5 @@
 package fun.fiver.cct;
 
-import fun.fiver.core.CCTClassVisitor;
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.Opcodes;
-
-import java.io.IOException;
 import java.lang.instrument.Instrumentation;
 
 public class CCTAgent {
@@ -19,7 +14,9 @@ public class CCTAgent {
 
         String className = fullyQualifiedClassName.replaceAll("\\.", "/");
 
-        CCTCollector.startCollectingFor(className);
+        CCTCollector.initializeFor(className);
+
+        CCTCollector.collectForOriginalClass();
 
         inst.addTransformer(new CCTClassFileTransformer(className));
 

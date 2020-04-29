@@ -1,112 +1,135 @@
 package fun.fiver.cct;
 
 import fun.fiver.core.CCTClassVisitor;
+import fun.fiver.nodes.CCTClassNode;
+import fun.fiver.nodes.CCTInstructionNode;
+import fun.fiver.nodes.CCTLabelNode;
+import fun.fiver.nodes.CCTMethodNode;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.Opcodes;
 
 import java.io.IOException;
-import java.util.*;
 
 public class CCTCollector {
 
-    private static List<String> methodNames = new ArrayList<>();
+    private static CCTClassNode originalCCTClassNode;
+    private static CCTClassNode modifiedCCTClassNode;
 
-    private static Map<String, List<String>> methodNameToLabelsMap = new HashMap<>();
+    public static CCTClassNode activeCCTClassNode;
 
-    private static Map<String, Map<String, Integer>> methodNameToLabelToLineNumberMap = new HashMap<>();
+    public static void initializeFor(String className){
+        originalCCTClassNode = new CCTClassNode(className);
+        modifiedCCTClassNode = new CCTClassNode(className);
 
-    public static void startCollectingFor(String className){
+    }
+
+    public static CCTClassNode getOriginalCCTClassNode(){
+        return originalCCTClassNode;
+    }
+
+    private static void setOriginalCCTClassNodeAsActive(){
+        activeCCTClassNode = originalCCTClassNode;
+    }
+
+    public static CCTClassNode getModifiedCCTClassNode(){
+        return modifiedCCTClassNode;
+    }
+
+    private static void setModifiedCCTClassNodeAsActive(){
+        activeCCTClassNode = modifiedCCTClassNode;
+    }
+
+    public static void collectForOriginalClass(){
+
+        setOriginalCCTClassNodeAsActive();
 
         CCTClassVisitor cctClassVisitor = new CCTClassVisitor(Opcodes.ASM8);
 
-        ClassReader classReader = null;
+        ClassReader classReader;
+
+        String className = activeCCTClassNode.getClassName();
 
         try {
             classReader = new ClassReader(className);
         } catch (IOException e) {
             e.printStackTrace();
+            return;
         }
 
         classReader.accept(cctClassVisitor, 0);
 
+        setModifiedCCTClassNodeAsActive();
+
     }
 
-    public static void addMethod(String methodName){
-        methodNames.add(methodName);
+    public static void visitMethodStart(String methodName){
+        activeCCTClassNode.addCCTMethodNode(new CCTMethodNode(methodName));
     }
 
-    public static void addLabel(String methodName, String label){
-        if(!methodNameToLabelsMap.containsKey(methodName)){
-            methodNameToLabelsMap.put(methodName, new ArrayList<>());
+    public static void visitLabel(String labelName){
+        activeCCTClassNode.getActiveCCTMethodNode().addCCTLabelNode(new CCTLabelNode(labelName));
+    }
+
+    public static void visitLineNumber(String lineNumber){
+        visitLineNumber(Integer.parseInt(lineNumber));
+    }
+
+    public static void visitLineNumber(int lineNumber){
+        activeCCTClassNode.getActiveCCTMethodNode().getActiveCCTLabelNode().setLineNumber(lineNumber);
+    }
+
+    public static void visitInstruction(String opcode){
+        visitInstruction(Integer.parseInt(opcode));
+    }
+
+    public static void visitInstruction(int opcode){
+        activeCCTClassNode.getActiveCCTMethodNode().getActiveCCTLabelNode().addCCTInstructionNode(new CCTInstructionNode(opcode));
+    }
+
+    public static void visitMethodEnd(){
+        activeCCTClassNode.getActiveCCTMethodNode().removeLastAddedLabel();
+        activeCCTClassNode.getActiveCCTMethodNode().findMissingLineNumbers();
+    }
+
+    private static void printCollectedInformationFor(CCTClassNode cctClassNode){
+
+        if(cctClassNode == originalCCTClassNode){
+            System.out.println("******************ORIGINAL*********************");
+        } else {
+            System.out.println("------------------MODIFIED---------------------");
         }
 
-        methodNameToLabelsMap.get(methodName).add(label);
+        System.out.println(cctClassNode.getClassName());
 
-    }
+        for(CCTMethodNode cctMethodNode: cctClassNode.getCCTMethodNodeList()){
 
-    public static void matchLabelToLineNumber(String methodName, String label, Integer lineNumber){
-        if(!methodNameToLabelToLineNumberMap.containsKey(methodName)){
-            methodNameToLabelToLineNumberMap.put(methodName, new TreeMap<>());
-        }
+            System.out.println();
+            System.out.println(cctMethodNode.getMethodName());
 
-        methodNameToLabelToLineNumberMap.get(methodName).put(label, lineNumber);
+            for(CCTLabelNode cctLabelNode: cctMethodNode.getCCTLabelNodeList()){
 
-    }
+                System.out.println();
+                System.out.println(cctLabelNode.getLabel() + " " + cctLabelNode.getLineNumber());
 
-    private static void removeLastLabelFor(String methodName){
-        methodNameToLabelsMap.get(methodName).remove(methodNameToLabelsMap.get(methodName).size() - 1);
-    }
+                for(CCTInstructionNode cctInstructionNode: cctLabelNode.getCctInstructionNodeList()){
 
-    private static void findLineNumbersOfUnmatchedLabelsFor(String methodName){
+                    System.out.println(cctInstructionNode.getOpcode());
 
-        List<String> labels = methodNameToLabelsMap.get(methodName);
+                }
 
-        Map<String, Integer> labelToLineNumberMap = methodNameToLabelToLineNumberMap.get(methodName);
-
-        for(int i = 1; i < labels.size(); i++){
-
-            String label = labels.get(i);
-
-            if(!labelToLineNumberMap.containsKey(label)){
-                String previousLabel = labels.get(i-1);
-                Integer lineNumber = labelToLineNumberMap.get(previousLabel);
-                labelToLineNumberMap.put(label, lineNumber);
             }
 
-        }
-    }
-
-    public static void finishCollectingFor(String methodName){
-        removeLastLabelFor(methodName);
-        findLineNumbersOfUnmatchedLabelsFor(methodName);
-    }
-
-    private static void printCollectedInformation(){
-
-        System.out.println("****************************************");
-
-        for(String methodName: methodNames){
-
-            System.out.println(methodName);
-
-            List<String> labels = methodNameToLabelsMap.get(methodName);
-
-            Map<String, Integer> labelToLineNumberMap = methodNameToLabelToLineNumberMap.get(methodName);
-
-            for(String label: labels){
-                System.out.println(label + ":" + labelToLineNumberMap.get(label));
-            }
-
-            System.out.println("------------------------------------------------");
+            System.out.println();
 
         }
 
-        System.out.println("****************************************");
+
     }
 
-
-    public static void finishCollecting(){
-        printCollectedInformation();
+    public static void printCollectedInformation(){
+        printCollectedInformationFor(originalCCTClassNode);
+        printCollectedInformationFor(modifiedCCTClassNode);
     }
+
 
 }

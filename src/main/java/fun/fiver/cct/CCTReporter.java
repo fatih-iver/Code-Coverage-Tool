@@ -1,5 +1,6 @@
 package fun.fiver.cct;
 
+import fun.fiver.nodes.CCTInstructionNode;
 import fun.fiver.util.CCTUtils;
 
 import java.io.File;
@@ -12,6 +13,12 @@ public class CCTReporter {
 
 
     public static void generateReport(String fullyQualifiedClassName, String sourceFilePath) {
+
+        CCTComparator.initializeWith(CCTCollector.getOriginalCCTClassNode(), CCTCollector.getModifiedCCTClassNode());
+
+        CCTComparator.startComparing();
+
+        //CCTCollector.printCollectedInformation();
 
         Map<Integer, String> sourceMap = CCTUtils.generateSourceMap(sourceFilePath);
 
