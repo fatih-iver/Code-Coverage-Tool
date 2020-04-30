@@ -52,7 +52,8 @@ public class CCTComparator {
 
     private static void compareMethodCoverageMaps(){
 
-        System.out.println("Coverage Percentages:");
+        System.out.println();
+        System.out.println("Method Line Coverages:");
 
         for(CCTMethodNode cctMethodNode: originalCCTClassNode.getCCTMethodNodeList()){
 
@@ -77,11 +78,83 @@ public class CCTComparator {
         }
     }
 
+    private static void calculateStatementCoverage(){
+
+        System.out.println();
+        System.out.println("Method Statement Coverages:");
+
+        Map<String, Map<String, Integer>> modifiedStatementCoverageMap = new HashMap<>();
+
+        for(CCTMethodNode cctMethodNode: modifiedCCTClassNode.getCCTMethodNodeList()){
+
+            String methodName = cctMethodNode.getMethodName();
+
+            if(!modifiedStatementCoverageMap.containsKey(methodName)){
+                modifiedStatementCoverageMap.put(methodName, new HashMap<>());
+            }
+
+            for(CCTLabelNode cctLabelNode: cctMethodNode.getCCTLabelNodeList()){
+
+                String labelName = cctLabelNode.getLabel();
+
+                if(!modifiedStatementCoverageMap.get(methodName).containsKey(labelName)){
+                    modifiedStatementCoverageMap.get(methodName).put(labelName, cctLabelNode.getCctInstructionNodeList().size());
+                } else {
+                    int currValue = modifiedStatementCoverageMap.get(methodName).get(labelName);
+                    modifiedStatementCoverageMap.get(methodName).put(labelName, Math.max(currValue, cctLabelNode.getCctInstructionNodeList().size()));
+                }
+
+            }
+
+        }
+
+        Map<String, Integer> modifiedStatementCountMap = new HashMap<>();
+
+        for(CCTMethodNode cctMethodNode: modifiedCCTClassNode.getCCTMethodNodeList()) {
+
+            String methodName = cctMethodNode.getMethodName();
+
+            int modifiedStatementCount = 0;
+
+            for(String labelName: modifiedStatementCoverageMap.get(methodName).keySet()){
+                modifiedStatementCount += modifiedStatementCoverageMap.get(methodName).get(labelName);
+            }
+
+            modifiedStatementCountMap.put(methodName, modifiedStatementCount);
+
+        }
+
+        for(CCTMethodNode cctMethodNode: originalCCTClassNode.getCCTMethodNodeList()) {
+
+            String methodName = cctMethodNode.getMethodName();
+
+            int originalStatementCount = 0;
+
+            for(CCTLabelNode cctLabelNode: cctMethodNode.getCCTLabelNodeList()){
+
+                originalStatementCount += cctLabelNode.getCctInstructionNodeList().size();
+
+            }
+
+            int modifiedStatementCount = modifiedStatementCountMap.getOrDefault(methodName, 0);
+
+            System.out.format("%1$-16s%2$-8s\n", methodName + ":", "%" + (int) (1.0 * modifiedStatementCount / originalStatementCount * 100));
+
+        }
+
+
+
+
+
+    }
+
     public static void startComparing(){
 
         calculateMethodCoverageMap();
 
         compareMethodCoverageMaps();
+
+        calculateStatementCoverage();
     }
 
     private static void formActiveMethodCoverageMap(){
