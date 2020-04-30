@@ -1,6 +1,7 @@
 package fun.fiver.core;
 
-import org.objectweb.asm.*;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.MethodVisitor;
 
 public class CCTClassVisitor extends ClassVisitor {
 

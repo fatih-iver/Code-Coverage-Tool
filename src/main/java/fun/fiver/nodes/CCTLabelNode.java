@@ -9,9 +9,9 @@ public class CCTLabelNode {
     private int lineNumber;
     private List<CCTInstructionNode> cctInstructionNodeList;
 
-    public CCTLabelNode(String label){
+    public CCTLabelNode(String label) {
         this.label = label;
-        this.lineNumber = - 1;
+        this.lineNumber = -1;
         this.cctInstructionNodeList = new ArrayList<>();
     }
 
@@ -23,15 +23,15 @@ public class CCTLabelNode {
         return cctInstructionNodeList;
     }
 
-    public int getLineNumber(){
+    public int getLineNumber() {
         return this.lineNumber;
     }
 
-    public void setLineNumber(int lineNumber){
+    public void setLineNumber(int lineNumber) {
         this.lineNumber = lineNumber;
     }
 
-    public void addCCTInstructionNode(CCTInstructionNode cctInstructionNode){
+    public void addCCTInstructionNode(CCTInstructionNode cctInstructionNode) {
         this.cctInstructionNodeList.add(cctInstructionNode);
     }
 

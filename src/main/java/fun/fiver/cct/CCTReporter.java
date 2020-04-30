@@ -1,6 +1,5 @@
 package fun.fiver.cct;
 
-import fun.fiver.nodes.CCTInstructionNode;
 import fun.fiver.util.CCTUtils;
 
 import java.io.File;

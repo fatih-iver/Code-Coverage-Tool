@@ -21,7 +21,7 @@ public class CCTMethodWriter extends MethodVisitor {
     public void visitLabel(Label label) {
         super.visitLabel(label);
 
-        if(!isFirstLabelVisited){
+        if (!isFirstLabelVisited) {
             isFirstLabelVisited = true;
             mv.visitLdcInsn(methodName);
             mv.visitMethodInsn(INVOKESTATIC, "fun/fiver/cct/CCTCollector", "visitMethodStart", "(Ljava/lang/String;)V", false);

@@ -8,7 +8,7 @@ public class CCTClassNode {
     private String className;
     private List<CCTMethodNode> cctMethodNodeList;
 
-    public CCTClassNode(String className){
+    public CCTClassNode(String className) {
         this.className = className;
         this.cctMethodNodeList = new ArrayList<>();
     }
@@ -21,11 +21,11 @@ public class CCTClassNode {
         return cctMethodNodeList;
     }
 
-    public void addCCTMethodNode(CCTMethodNode cctMethodNode){
+    public void addCCTMethodNode(CCTMethodNode cctMethodNode) {
         cctMethodNodeList.add(cctMethodNode);
     }
 
-    public CCTMethodNode getActiveCCTMethodNode(){
+    public CCTMethodNode getActiveCCTMethodNode() {
         return cctMethodNodeList.get(cctMethodNodeList.size() - 1);
     }
 

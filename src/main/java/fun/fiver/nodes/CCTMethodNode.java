@@ -25,19 +25,19 @@ public class CCTMethodNode {
         this.cctLabelNodeList.add(cctLabelNode);
     }
 
-    public CCTLabelNode getActiveCCTLabelNode(){
+    public CCTLabelNode getActiveCCTLabelNode() {
         return cctLabelNodeList.get(cctLabelNodeList.size() - 1);
     }
 
-    public void removeLastAddedLabel(){
+    public void removeLastAddedLabel() {
         cctLabelNodeList.remove(cctLabelNodeList.size() - 1);
     }
 
     public void findMissingLineNumbers() {
-        for(int i = 0; i < cctLabelNodeList.size(); i++){
+        for (int i = 0; i < cctLabelNodeList.size(); i++) {
             CCTLabelNode currentCCTLabelNode = cctLabelNodeList.get(i);
-            if(currentCCTLabelNode.getLineNumber() == -1){
-                CCTLabelNode previousCCTLabelNode = cctLabelNodeList.get(i-1);
+            if (currentCCTLabelNode.getLineNumber() == -1) {
+                CCTLabelNode previousCCTLabelNode = cctLabelNodeList.get(i - 1);
                 currentCCTLabelNode.setLineNumber(previousCCTLabelNode.getLineNumber());
             }
         }

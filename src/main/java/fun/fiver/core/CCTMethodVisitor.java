@@ -2,8 +2,10 @@ package fun.fiver.core;
 
 
 import fun.fiver.cct.CCTCollector;
-
-import org.objectweb.asm.*;
+import org.objectweb.asm.Handle;
+import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 public class CCTMethodVisitor extends MethodVisitor {
 
@@ -27,7 +29,7 @@ public class CCTMethodVisitor extends MethodVisitor {
     @Override
     public void visitLineNumber(int line, Label start) {
         CCTCollector.visitLineNumber(line);
-     }
+    }
 
     @Override
     public void visitInsn(int opcode) {
